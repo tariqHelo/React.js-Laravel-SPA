@@ -1,23 +1,47 @@
 import { component, useEffect, useState } from 'react';
+
 function PostIndex() {
 
     const [posts, setPosts] = useState([]);
+    const [category, setCategory] = useState([]);
 
+    console.log(category);
     async function fetchPosts() {
         const response = await fetch('http://127.0.0.1:8000/api/posts');
-        const data = await response.json();
-        console.log(data);
-        setPosts(data.data);
+        const posts = await response.json();
+        console.log(posts);
+        setPosts(posts.data);
     }
-
+    // how to fetch categories
+    async function fetchCategory() {
+        const response = await fetch('http://127.0.0.1:8000/api/categories')
+        const categories = await response.json();
+        console.log(response);
+        setCategory(categories.data);
+    }
     useEffect(() => {
         fetchPosts();
+        fetchCategory()
     }, []);
 
+    //how to make dropdown select category
+
+    const categoryDropdown = category.map(category => {
+        return <option key={category.id} value={category.id}>{category.name}</option>
+    }
+    )
     return (
+
         <div className="overflow-hidden overflow-x-auto p-6 bg-white border-gray-200">
             <div className="min-w-full align-middle">
+                <div className='mb-4'>
+                    <select className="mt-1 w-full sm:mt-0 sm:w-1/4 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" >
+                        <option>-- all categories --</option>
+                        {categoryDropdown}
+                    </select>
+                </div>
                 <table className="table">
+
                     <thead className="table-header">
                         <tr>
                             <th>
@@ -25,6 +49,9 @@ function PostIndex() {
                             </th>
                             <th>
                                 <span>Title</span>
+                            </th>
+                            <th>
+                                <span>Category</span>
                             </th>
                             <th>
                                 <span>Content</span>
@@ -40,45 +67,12 @@ function PostIndex() {
                                 <tr key={post.id}>
                                     <td>{post.id}</td>
                                     <td>{post.title}</td>
+                                    <td>{post.category.name}</td>
                                     <td>{post.content}</td>
                                     <td>{post.created_at}</td>
                                 </tr>
                             );
                         })}
-
-                        {/* <tr>
-                            <td>1</td>
-                            <td>A</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                            <td>2022-01-01 13:43:47</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>B</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                            <td>2022-01-02 14:43:47</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>C</td>
-                            <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-                            <td>2022-01-03 15:43:47</td>
-                        </tr> */}
                     </tbody>
                 </table>
             </div>

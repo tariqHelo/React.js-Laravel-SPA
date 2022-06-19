@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
+
 use App\Models\Post;
 use App\Http\Resources\PostResource;
 class PostController extends Controller
@@ -14,7 +16,8 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {    
+        //dd(20);
         return PostResource::collection(Post::with('category')->Paginate(10));
     }
 
@@ -24,9 +27,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(StorePostRequest $request)
+    {   
+        sleep(2);
+        $post = Post::create($request->validated());
+        return new PostResource($post);
     }
 
     /**
@@ -47,7 +52,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, $id)
     {
         //
     }

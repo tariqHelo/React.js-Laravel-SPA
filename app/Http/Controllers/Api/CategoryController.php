@@ -19,7 +19,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {  
+       // dd(20);
+       //  dd(Category::all());
         return CategoryResource::collection(Category::all());
     }
 

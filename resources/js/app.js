@@ -1,7 +1,8 @@
-import './bootstrap';
+require('./bootstrap');
 
-// import { render } from 'react-dom';
 import { createRoot } from 'react-dom/client';
-import PostIndex from './Pages/Posts';
+// import PostsIndex from "./Pages/Posts";
+import App from "./Layouts/App";
 const root = createRoot(document.getElementById('app'));
-root.render(<PostIndex />);
+// root.render(<PostsIndex />)
+root.render(<App />)

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('layouts.app');
 })->name('dashboard');
 
 require __DIR__.'/auth.php';

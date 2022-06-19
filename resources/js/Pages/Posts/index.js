@@ -1,4 +1,4 @@
-import { component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function PostIndex() {
 
@@ -9,14 +9,14 @@ function PostIndex() {
     async function fetchPosts() {
         const response = await fetch('http://127.0.0.1:8000/api/posts');
         const posts = await response.json();
-        console.log(posts);
+        //console.log(posts);
         setPosts(posts.data);
     }
     // how to fetch categories
     async function fetchCategory() {
         const response = await fetch('http://127.0.0.1:8000/api/categories')
         const categories = await response.json();
-        console.log(response);
+       // console.log(response);
         setCategory(categories.data);
     }
     useEffect(() => {
@@ -28,7 +28,7 @@ function PostIndex() {
 
     const categoryDropdown = category.map(category => {
         return <option key={category.id} value={category.id}>{category.name}</option>
-    }
+     }
     )
     return (
 

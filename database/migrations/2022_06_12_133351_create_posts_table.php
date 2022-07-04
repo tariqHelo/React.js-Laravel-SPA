@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->longText('content');
             $table->foreignId('category_id')->references('id')->on('categories');
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
     }

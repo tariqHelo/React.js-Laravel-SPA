@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 function PostIndex() {
 
     const [posts, setPosts] = useState([]);

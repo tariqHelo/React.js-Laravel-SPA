@@ -31,6 +31,9 @@ class PostController extends Controller
     {   
         sleep(2);
         $post = Post::create($request->validated());
+        if($request->hasFile('thumbnail')){
+            $post->thumbnail = $request->thumbnail->store('posts');
+        }
         return new PostResource($post);
     }
 

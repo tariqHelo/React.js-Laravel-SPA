@@ -8,6 +8,7 @@ function PostsCreate() {
     const [content, setContent] = useState("");
     const [category_id, setCategoryId] = useState("");
     const [categories, setCategories] = useState([]);
+    const [thumbnail, setThumbnail] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     
@@ -30,36 +31,26 @@ function PostsCreate() {
         e.preventDefault();
         // console.log(title, content, category_id);
         //send multipart form data to server
-
+        
         // cheack is loading is true
-        if(loading) {
-            return  setSatate({error: "Please wait..."} , setLoading(true))
-        }
+        if(loading) return;
 
+        // set loading to true
+        setLoading(true);
+        // set error to empty string
+        setError("");
         // setLoading(true);
         const formData = new FormData();
         formData.append('title', title);
         formData.append('content', content);
         formData.append('category_id', category_id);
+        formData.append('thumbnail', thumbnail);
         const response = await axios.post('http://127.0.0.1:8000/api/posts', formData)
        .then(res => window.location.href = "/" )
        .catch(err => setError(err.response.data.errors))
        .finally(() => setLoading(false));
     }
 
-   
-    //   ErrorMsg = (filed) => {
-    //      return <div className="alert alert-danger">
-    //         {
-    //             error.map(err => {
-    //         }
-    //      </div> 
-    //     }
-
-    // let errorMsg = error.map(error => {
-    //     return <div className="text-red-500">{error}</div>
-    // }
-    // )
 
     return (
         <form onSubmit={handleSubmit}>
@@ -78,6 +69,15 @@ function PostsCreate() {
                     Content
                 </label>
                 <textarea value={content} onChange={(e) => setContent(e.target.value) }  id="content" type="text" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <div className='text-red-600 mt-2'>
+                    {error.content && <p className="text-red-500 text-xs italic">{error.content}</p>}
+                </div>
+            </div>
+            <div className="mt-4">
+                <label htmlFor="thumbnail" className="block font-medium text-sm text-gray-700">
+                  Thumbnail
+                </label>
+                <input value={thumbnail} onChange={(e) => setThumbnail(e.target.files[0]) }  id="thumbnail" type="file" className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                 <div className='text-red-600 mt-2'>
                     {error.content && <p className="text-red-500 text-xs italic">{error.content}</p>}
                 </div>

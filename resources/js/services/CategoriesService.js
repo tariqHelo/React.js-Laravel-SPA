@@ -2,12 +2,14 @@ import { extract } from "laravel-mix";
 import React from "react";
 
 function CategoriesService () {
-    // getCategories = function () {
-    //     return $http.get('/api/categories');
-    // }
-    // const getAll {
-    //     return 
-    // }
+
+    getAll = () => {
+        return fetch('http://localhost:8000/api/categories')
+            .then(response => response.json())
+            .then(data => {
+                return data.data;
+            })
+    }
 
 }
 
